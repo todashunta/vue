@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>typing</title>
+</head>
+
+<body>
+    <main id="app">
+        <h1>タイピングゲーム</h1>
+        <div v-show="start">
+            <div class="text">
+                <p>{{text}}</p>
+            </div>
+            <div class="input">
+                <input type="text" v-model="input">
+            </div>
+            <div class="bar">
+                <div>
+                    <div class="progress" :style="barStyle"></div>
+                </div>
+            </div>
+            <div class="rate" v-if="!clear">
+                <p>{{ counter + 1 }}/{{ textList.length }}</p>
+            </div>
+            <div class="clear" v-if="clear">
+                <p>clear!!</p>
+            </div>
+        </div>
+        <div class="button" v-if="!start" @click="start = true">スタート</div>
+    </main>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
