@@ -14,10 +14,10 @@
         <h1>タイピングゲーム</h1>
         <div v-if="start">
             <div class="text">
-                <p>{{text}}</p>
+                <p>{{ text }}</p>
             </div>
             <div class="input">
-                <input id="inputForm" type="text" v-model="input">
+                <input id="inputForm" type="text" v-model="input" :style="inputStyle">
             </div>
             <div class="bar">
                 <div>

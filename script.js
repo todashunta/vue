@@ -10,6 +10,9 @@ const app = Vue.createApp({
             barStyle: {
                 width: 0,
             },
+            inputStyle: {
+                backgroundColor: 'white'
+            },
             getData: []
 
         }
@@ -24,7 +27,6 @@ const app = Vue.createApp({
     },
     methods: {
         correct(){
-            console.log('a')
             this.counter += 1;
             if(this.counter >= this.textList.length){
                 this.clear = true;
@@ -38,6 +40,7 @@ const app = Vue.createApp({
                     width: 100/ this.textList.length * this.counter + '%'
                 }
             }
+
 
         },
         startBtn(){
@@ -60,13 +63,24 @@ const app = Vue.createApp({
     },
     watch: {
         input(){
-            if(this.input.slice(-1) != this.text[this.input.length - 1]){
+            console.log(this.input)
+            if(this.input.slice(-1) != this.text[this.input.length - 1] && this.input.length - 1 >= 0){
                 this.input = this.input.slice(0, -1);
+                this.$nextTick(function (){
+                    this.inputStyle = {
+                        backgroundColor: 'red',
+                    }
+                })
+            }else{
+                this.inputStyle = {
+                    backgroundColor: 'white',
+                }
             }
             if(this.text == this.input){
                 this.correct();
                 this.input = '';
             }
+
         }
     }
 
