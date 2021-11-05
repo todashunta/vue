@@ -6,39 +6,63 @@ const app = Vue.createApp({
             input: '',
             clear: false,
             counter: 0,
-            textList: [
-                'apple',
-                'banana',
-                'orange',
-            ],
+            textList: [],
             barStyle: {
                 width: 0,
-            }
-            
+            },
+            getData: []
+
         }
     },
     created() {
-        this.text = this.textList[this.counter];
+        getJson('https://jsonplaceholder.typicode.com/users').then(data=>{
+            console.log(data)
+            this.getData = data;
+        }).catch(err =>{
+            console.log(err)
+        })
     },
     methods: {
         correct(){
+            console.log('a')
             this.counter += 1;
-            this.text = this.textList[this.counter];
-            this.barStyle = {
-                width: 100/ this.textList.length * this.counter + '%'
-            }
             if(this.counter >= this.textList.length){
                 this.clear = true;
                 this.barStyle = {
                     width: 100 + '%',
-                    backgroundColor: 'lightblue', 
+                    backgroundColor: 'lightblue',
+                }
+            }else{
+                this.text = this.textList[this.counter].username;
+                this.barStyle = {
+                    width: 100/ this.textList.length * this.counter + '%'
                 }
             }
-            
+
+        },
+        startBtn(){
+            this.start = true;
+            this.$nextTick(function(){
+                document.getElementById('inputForm').focus();
+            })
+            this.textList = this.getData;
+            this.text = this.textList[this.counter].username;
+        },
+        resetBtn(){
+            this.start = false;
+            this.clear = false;
+            this.counter = 0;
+            this.barStyle = {
+                width: 0
+            }
+            this.text = this.textList[this.counter].username
         }
     },
     watch: {
         input(){
+            if(this.input.slice(-1) != this.text[this.input.length - 1]){
+                this.input = this.input.slice(0, -1);
+            }
             if(this.text == this.input){
                 this.correct();
                 this.input = '';
@@ -47,3 +71,10 @@ const app = Vue.createApp({
     }
 
 }).mount('#app')
+
+async function getJson(url){
+    const res = await fetch(url)
+    const data = res.json();
+    return data
+}
+

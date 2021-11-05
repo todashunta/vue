@@ -12,12 +12,12 @@
 <body>
     <main id="app">
         <h1>タイピングゲーム</h1>
-        <div v-show="start">
+        <div v-if="start">
             <div class="text">
                 <p>{{text}}</p>
             </div>
             <div class="input">
-                <input type="text" v-model="input">
+                <input id="inputForm" type="text" v-model="input">
             </div>
             <div class="bar">
                 <div>
@@ -31,7 +31,8 @@
                 <p>clear!!</p>
             </div>
         </div>
-        <div class="button" v-if="!start" @click="start = true">スタート</div>
+        <div class="button" v-if="!start" @click="startBtn">スタート</div>
+        <div class="button" v-if="clear" @click='resetBtn'>リセット</div>
     </main>
     <script src="https://unpkg.com/vue@next"></script>
     <script src="script.js"></script>
